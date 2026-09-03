@@ -15,10 +15,32 @@ class UserController
 
         $this->userModel = new User($db);
     }
+    private function requireLogin(): void
+    {
+        if (!isset($_SESSION['usuario_id'])) {
+
+            header('Location: index.php?action=login');
+            exit;
+        }
+    }
+    private function requireAdmin(): void
+    {
+        $this->requireLogin();
+
+        if (($_SESSION['usuario_rol'] ?? '') !== 'admin') {
+
+            http_response_code(403);
+
+            exit(
+                'Acceso denegado. Solo un administrador puede realizar esta acción.'
+            );
+        }
+    }
 
     // Mostrar todos los usuarios
     public function index(): void
     {
+        $this->requireLogin();
         $usuarios = $this->userModel->getAll();
 
         require __DIR__ . '/../views/users/index.php';
@@ -27,12 +49,14 @@ class UserController
     // Mostrar formulario de creación
     public function create(): void
     {
+        $this->requireAdmin();
         require __DIR__ . '/../views/users/create.php';
     }
 
     // Guardar usuario
     public function store(): void
-    {
+    {   
+        $this->requireAdmin();
         $firstname = trim($_POST['firstname'] ?? '');
         $lastname = trim($_POST['lastname'] ?? '');
         $address = trim($_POST['address'] ?? '');
@@ -83,6 +107,7 @@ class UserController
     // Mostrar formulario de edición
     public function edit(): void
     {
+        $this->requireAdmin();
         $id = (int)($_GET['id'] ?? 0);
 
         if ($id <= 0) {
@@ -101,6 +126,7 @@ class UserController
     // Actualizar usuario
     public function update(): void
     {
+        $this->requireAdmin();
         $id = (int)($_POST['user_id'] ?? 0);
 
         $firstname = trim($_POST['firstname'] ?? '');
@@ -168,6 +194,7 @@ class UserController
     // Eliminar usuario
     public function delete(): void
     {
+        $this->requireAdmin();
         $id = (int)($_GET['id'] ?? 0);
 
         if ($id <= 0) {

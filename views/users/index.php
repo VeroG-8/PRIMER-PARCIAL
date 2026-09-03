@@ -1,5 +1,19 @@
 <?php require __DIR__ . "/../layouts/header.php"; ?>
 
+<p>
+    Hola,
+    <?= htmlspecialchars($_SESSION['usuario_nombre']) ?>
+</p>
+
+<p>
+    Rol:
+    <?= htmlspecialchars($_SESSION['usuario_rol']) ?>
+</p>
+
+<a href="index.php?action=logout">
+    Cerrar sesión
+</a>
+
 <h1>Listado de usuarios</h1>
 
 <table>
@@ -52,25 +66,27 @@
                 </td>
 
                 <td class="actions">
+                    <?php if (($_SESSION['usuario_rol'] ?? '') === 'admin'): ?>
 
-                    <a
+                        <a
                         href="index.php?action=edit&id=<?= $usuario["user_id"] ?>"
-                        title="Editar"
-                    >
-                        <i class="fa-solid fa-pen-to-square"></i>
-                        Editar
-                    </a>
+                        title="Editar"><i class="fa-solid fa-pen-to-square"></i>Editar</a>
 
-                    <a
-                        class="btn-eliminar"
-                        href="index.php?action=delete&id=<?= $usuario["user_id"] ?>"
-                        onclick="return confirm('¿Eliminar este usuario?')"
-                        title="Eliminar"
-                    >
-                        <i class="fa-solid fa-trash"></i>
-                        Eliminar
-                    </a>
+                        <a
+                            class="btn-eliminar"
+                            href="index.php?action=delete&id=<?= $usuario["user_id"] ?>"
+                            onclick="return confirm('¿Eliminar este usuario?')"
+                            title="Eliminar"
+                        >
+                            <i class="fa-solid fa-trash"></i>
+                            Eliminar
+                        </a>
+                    <?php else: ?>
 
+                        Solo lectura
+
+                    <?php endif; ?>
+                    
                 </td>
 
             </tr>

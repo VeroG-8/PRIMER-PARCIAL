@@ -11,5 +11,7 @@
 <body>
     <nav class="menu">
         <a class="menu-link" href="index.php?action=index">Listado</a>
+        <?php if (($_SESSION['usuario_rol'] ?? '') === 'admin'): ?>
         <a class="menu-link" href="index.php?action=create">Nuevo usuario</a>
+        <?php endif; ?>
     </nav>
