@@ -1,18 +1,39 @@
 <?php require __DIR__ . "/../layouts/header.php"; ?>
 
-<p>
-    Hola,
-    <?= htmlspecialchars($_SESSION['usuario_nombre']) ?>
-</p>
+<div class="user-info">
 
-<p>
-    Rol:
-    <?= htmlspecialchars($_SESSION['usuario_rol']) ?>
-</p>
+    <div class="user-welcome">
 
-<a href="index.php?action=logout">
-    Cerrar sesión
-</a>
+        <span class="user-icon">👤</span>
+
+        <div>
+            <p class="user-name">
+                Hola,
+                <strong>
+                    <?= htmlspecialchars($_SESSION['usuario_nombre']) ?>
+                </strong>
+            </p>
+
+            <p class="user-role">
+                Rol:
+                <span>
+                    <?= htmlspecialchars($_SESSION['usuario_rol']) ?>
+                </span>
+            </p>
+        </div>
+
+    </div>
+
+
+    <a
+        class="logout-button"
+        href="index.php?action=logout"
+    >
+        Cerrar sesión
+    </a>
+
+</div>
+
 
 <h1>Listado de usuarios</h1>
 

@@ -238,6 +238,133 @@
     border: 1px solid #f5b5b5;
 
 }
+/*COLOCANDO ESTILO A LA CABECERA DE USUARIO
+----LISTADO DE USUARIOS -------*/
+
+/* =========================
+   INFORMACIÓN DEL USUARIO
+========================= */
+
+.user-info {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 15px 20px;
+
+    margin-bottom: 25px;
+
+    background-color: white;
+
+    border-radius: 10px;
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.10);
+
+}
+
+
+/* Nombre y rol */
+
+.user-welcome {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.user-icon {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #667eea;
+
+    font-size: 20px;
+
+}
+
+
+.user-name {
+
+    margin: 0 0 4px;
+
+    color: #333;
+
+    font-size: 15px;
+
+}
+
+
+.user-role {
+
+    margin: 0;
+
+    color: #777;
+
+    font-size: 13px;
+
+}
+
+
+/* Rol */
+
+.user-role span {
+
+    font-weight: bold;
+
+    color: #667eea;
+
+}
+
+
+/* Botón cerrar sesión */
+
+.logout-button {
+
+    display: inline-block;
+
+    padding: 9px 15px;
+
+    border-radius: 7px;
+
+    background-color: #f1f1f1;
+
+    color: #444;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    transition: all 0.3s ease;
+
+}
+
+
+.logout-button:hover {
+
+    background-color: #e0e0e0;
+
+    transform: translateY(-2px);
+
+}
 
 
 /* =========================
@@ -258,5 +385,25 @@
         font-size: 26px;
 
     }
+
+    /*RESPONSIVE PARA CABECERA DE LISTADO*/
+     .user-info {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+        gap: 15px;
+
+    }
+
+
+    .logout-button {
+
+        text-align: center;
+
+    }
+
+
 
 }
