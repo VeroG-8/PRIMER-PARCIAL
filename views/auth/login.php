@@ -12,18 +12,25 @@
 
     <link
         rel="stylesheet"
-        href="css/style.css"
+        href="css/style-login.css"
     >
 
     <title>Iniciar sesión</title>
 
 </head>
 
-<body>
+<body class="login-body">
 
     <div class="login-container">
 
-        <h1>Iniciar sesión</h1>
+        <div class="login-header">
+
+            <h1>Iniciar sesión</h1>
+
+            <p>Ingresá a tu cuenta</p>
+
+        </div>
+
 
         <?php if (!empty($error)): ?>
 
@@ -33,37 +40,51 @@
 
         <?php endif; ?>
 
+
         <form
             action="index.php?action=login"
             method="POST"
+            class="login-form"
         >
 
-            <label for="email">
-                Correo
-            </label>
+            <div class="form-group">
 
-            <input
-                class="input"
-                type="email"
-                id="email"
-                name="email"
-                required
-            >
+                <label for="email">
+                    Correo electrónico
+                </label>
 
-            <label for="password">
-                Contraseña
-            </label>
+                <input
+                    class="input"
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Ingresá tu correo"
+                    required
+                >
 
-            <input
-                class="input"
-                type="password"
-                id="password"
-                name="password"
-                required
-            >
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="password">
+                    Contraseña
+                </label>
+
+                <input
+                    class="input"
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Ingresá tu contraseña"
+                    required
+                >
+
+            </div>
+
 
             <button
-                class="btn-form"
+                class="btn-login"
                 type="submit"
             >
                 Ingresar
