@@ -1,8 +1,6 @@
 <?php require __DIR__."/../layouts/header.php"; ?>
 <h1>Listado de usuarios</h1>
-<p>
-    <a class="menu-link" href="index.php?action=create">+ Nuevo usuario</a>
-</p>
+
 <table>
     <thead class="menu-tabla">
         <tr>
@@ -30,8 +28,13 @@
             <td><?=htmlspecialchars($usuario["password_hash"])?></td>
             <td><?=htmlspecialchars($usuario["rol"])?></td>
             <td class="actions">
-                <a href="index.php?action=edit&id=<?=$usuario["user_id"]?>">Editar</a>
-                <a href="index.php?action=delete&id=<?=$usuario["user_id"]?>" onclick="return confirm('¿Eliminar este usuario?')">Eliminar</a>
+                <a href="index.php?action=edit&id=<?=$usuario["user_id"]?>" title="Editar">
+                     <i class="fa-solid fa-pen-to-square"></i>Editar
+                </a>
+                <a class="btn-eliminar" href="index.php?action=delete&id=<?=$usuario["user_id"]?>"
+                    onclick="return confirm('¿Eliminar este usuario?')" title="Eliminar">
+                    <i class="fa-solid fa-trash"></i>Eliminar
+                </a>
             </td>
         </tr>
         <?php endwhile; ?>

@@ -2,7 +2,7 @@
 
 <h1>Nuevo usuario</h1>
 
-<form action="index.php?action=store" method="POST">
+<form class="form" action="index.php?action=store" method="POST">
 
     <label>Nombre</label>
     <input type="text" name="firstname" required>

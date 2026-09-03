@@ -1,7 +1,7 @@
     <footer class="footer">
         <p class="texto-footer"> 
             © 2026 Verónica Guaymás <br>
-            Primer Parcial<br>
+            verogdevs@gmail.com<br>
             Salta - Capital
         </p>
     
