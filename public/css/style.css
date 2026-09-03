@@ -17,16 +17,23 @@ body {
     border-radius: 10px;
     padding: 8px 14px;
     text-align: center;
-    background-color: #ced7f7;
-
-    box-shadow: 0 4px 0 #9aa6cc;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
 }
 .menu-link:hover {
     background-color: #d7ecfb;
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 7px 15px rgba(0, 0, 0, 0.2);
+
 }
 .menu-link:active {
-    box-shadow: 0 1px 0 #9aa6cc;
-    transform: translateY(3px);
+    transform: translateY(0px);
 }
 table {
         width:100%;
