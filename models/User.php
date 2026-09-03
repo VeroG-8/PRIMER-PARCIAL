@@ -1,49 +1,57 @@
 <?php
 
-class User {
+class User
+{
+    private PDO $db;
 
-    private $conexion;
-
-    public function __construct($conexion) {
-        $this->conexion = $conexion;
+    public function __construct(PDO $db)
+    {
+        $this->db = $db;
     }
 
-    public function getAll() {
-        return $this->conexion->query(
-            "SELECT * FROM users ORDER BY user_id DESC"
-        );
+    // Obtener todos los usuarios
+    public function getAll(): array
+    {
+        $sql = "SELECT user_id, firstname, lastname, address, contact, email, rol
+                FROM users
+                ORDER BY user_id DESC";
+
+        $stmt = $this->db->query($sql);
+
+        return $stmt->fetchAll();
     }
 
-    public function getById($id) {
+    // Obtener un usuario por ID
+    public function getById(int $id): ?array
+    {
+        $sql = "SELECT user_id, firstname, lastname, address, contact, email, rol
+                FROM users
+                WHERE user_id = ?";
 
-        $s = $this->conexion->prepare(
-            "SELECT * FROM users WHERE user_id = ?"
-        );
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
 
-        $s->bind_param("i", $id);
-        $s->execute();
-
-        return $s->get_result()->fetch_assoc();
+        return $stmt->fetch() ?: null;
     }
 
+    // Crear usuario
     public function create(
-        $firstname,
-        $lastname,
-        $address,
-        $contact,
-        $email,
-        $password_hash,
-        $rol
-    ) {
+        string $firstname,
+        string $lastname,
+        string $address,
+        string $contact,
+        string $email,
+        string $password_hash,
+        string $rol
+    ): bool {
 
-        $s = $this->conexion->prepare(
-            "INSERT INTO users 
-            (firstname, lastname, address, contact, email, password_hash, rol)
-            VALUES (?, ?, ?, ?, ?, ?, ?)"
-        );
+        $sql = "INSERT INTO users
+                (firstname, lastname, address, contact, email, password_hash, rol)
+                VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        $s->bind_param(
-            "sssssss",
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
             $firstname,
             $lastname,
             $address,
@@ -51,36 +59,34 @@ class User {
             $email,
             $password_hash,
             $rol
-        );
-
-        return $s->execute();
+        ]);
     }
 
+    // Actualizar usuario incluyendo contraseña
     public function update(
-        $id,
-        $firstname,
-        $lastname,
-        $address,
-        $contact,
-        $email,
-        $password_hash,
-        $rol
-    ) {
+        int $id,
+        string $firstname,
+        string $lastname,
+        string $address,
+        string $contact,
+        string $email,
+        string $password_hash,
+        string $rol
+    ): bool {
 
-        $s = $this->conexion->prepare(
-            "UPDATE users SET
-            firstname = ?,
-            lastname = ?,
-            address = ?,
-            contact = ?,
-            email = ?,
-            password_hash = ?,
-            rol = ?
-            WHERE user_id = ?"
-        );
+        $sql = "UPDATE users
+                SET firstname = ?,
+                    lastname = ?,
+                    address = ?,
+                    contact = ?,
+                    email = ?,
+                    password_hash = ?,
+                    rol = ?
+                WHERE user_id = ?";
 
-        $s->bind_param(
-            "sssssssi",
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
             $firstname,
             $lastname,
             $address,
@@ -89,34 +95,32 @@ class User {
             $password_hash,
             $rol,
             $id
-        );
-
-        return $s->execute();
+        ]);
     }
 
+    // Actualizar usuario sin modificar contraseña
     public function updateWithoutPassword(
-        $id,
-        $firstname,
-        $lastname,
-        $address,
-        $contact,
-        $email,
-        $rol
-    ) {
+        int $id,
+        string $firstname,
+        string $lastname,
+        string $address,
+        string $contact,
+        string $email,
+        string $rol
+    ): bool {
 
-        $s = $this->conexion->prepare(
-            "UPDATE users SET
-            firstname = ?,
-            lastname = ?,
-            address = ?,
-            contact = ?,
-            email = ?,
-            rol = ?
-            WHERE user_id = ?"
-        );
+        $sql = "UPDATE users
+                SET firstname = ?,
+                    lastname = ?,
+                    address = ?,
+                    contact = ?,
+                    email = ?,
+                    rol = ?
+                WHERE user_id = ?";
 
-        $s->bind_param(
-            "ssssssi",
+        $stmt = $this->db->prepare($sql);
+
+        return $stmt->execute([
             $firstname,
             $lastname,
             $address,
@@ -124,19 +128,16 @@ class User {
             $email,
             $rol,
             $id
-        );
-
-        return $s->execute();
+        ]);
     }
 
-    public function delete($id) {
+    // Eliminar usuario
+    public function delete(int $id): bool
+    {
+        $sql = "DELETE FROM users WHERE user_id = ?";
 
-        $s = $this->conexion->prepare(
-            "DELETE FROM users WHERE user_id = ?"
-        );
+        $stmt = $this->db->prepare($sql);
 
-        $s->bind_param("i", $id);
-
-        return $s->execute();
+        return $stmt->execute([$id]);
     }
 }

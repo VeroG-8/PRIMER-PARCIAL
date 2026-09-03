@@ -1,47 +1,39 @@
 <?php
 
-require_once __DIR__ . "/../controllers/UserController.php";
+require_once __DIR__ . '/../controllers/UserController.php';
 
 $controller = new UserController();
 
-$action = $_GET["action"] ?? "index";
+$action = $_GET['action'] ?? 'index';
 
 switch ($action) {
 
-    case "index":
+    case 'index':
         $controller->index();
         break;
 
-    case "create":
+    case 'create':
         $controller->create();
         break;
 
-    case "store":
-
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            die("Método no permitido.");
-        }
-
+    case 'store':
         $controller->store();
         break;
 
-    case "edit":
+    case 'edit':
         $controller->edit();
         break;
 
-    case "update":
-
-        if ($_SERVER["REQUEST_METHOD"] !== "POST") {
-            die("Método no permitido.");
-        }
-
+    case 'update':
         $controller->update();
         break;
 
-    case "delete":
+    case 'delete':
         $controller->delete();
         break;
 
     default:
-        die("Acción no encontrada.");
+        http_response_code(404);
+        echo 'Acción no encontrada.';
+        break;
 }

@@ -1,41 +1,70 @@
 <?php
 
-require_once __DIR__ . "/../config/database.php";
-require_once __DIR__ . "/../models/User.php";
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../models/User.php';
 
-class UserController {
+class UserController
+{
+    private User $userModel;
 
-    private $userModel;
+    public function __construct()
+    {
+        $database = new Database();
 
-    public function __construct() {
-        global $conexion;
-        $this->userModel = new User($conexion);
+        $db = $database->getConnection();
+
+        $this->userModel = new User($db);
     }
 
-    public function index() {
+    // Mostrar todos los usuarios
+    public function index(): void
+    {
         $usuarios = $this->userModel->getAll();
-        require __DIR__ . "/../views/users/index.php";
+
+        require __DIR__ . '/../views/users/index.php';
     }
 
-    public function create() {
-        require __DIR__ . "/../views/users/create.php";
+    // Mostrar formulario de creación
+    public function create(): void
+    {
+        require __DIR__ . '/../views/users/create.php';
     }
 
-    public function store() {
+    // Guardar usuario
+    public function store(): void
+    {
+        $firstname = trim($_POST['firstname'] ?? '');
+        $lastname = trim($_POST['lastname'] ?? '');
+        $address = trim($_POST['address'] ?? '');
+        $contact = trim($_POST['contact'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $rol = trim($_POST['rol'] ?? 'usuario');
 
-        $firstname = trim($_POST["firstname"] ?? "");
-        $lastname = trim($_POST["lastname"] ?? "");
-        $address = trim($_POST["address"] ?? "");
-        $contact = trim($_POST["contact"] ?? "");
-        $email = trim($_POST["email"] ?? "");
-        $password = trim($_POST["password"] ?? "");
-        $rol = trim($_POST["rol"] ?? "");
-
-        if ($firstname === "" || $lastname === "" || $email === "" || $password === "") {
-            die("Complete los campos obligatorios.");
+        // Validaciones básicas
+        if (
+            $firstname === '' ||
+            $lastname === '' ||
+            $email === '' ||
+            $password === ''
+        ) {
+            die('Complete los campos obligatorios.');
         }
 
-        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            die('El correo electrónico no es válido.');
+        }
+
+        // Validar rol
+        if (!in_array($rol, ['usuario', 'admin'], true)) {
+            $rol = 'usuario';
+        }
+
+        // Generar hash
+        $password_hash = password_hash(
+            $password,
+            PASSWORD_DEFAULT
+        );
 
         $this->userModel->create(
             $firstname,
@@ -47,45 +76,65 @@ class UserController {
             $rol
         );
 
-        header("Location: index.php?action=index");
+        header('Location: index.php?action=index');
         exit;
     }
 
-    public function edit() {
-
-        $id = (int)($_GET["id"] ?? 0);
+    // Mostrar formulario de edición
+    public function edit(): void
+    {
+        $id = (int)($_GET['id'] ?? 0);
 
         if ($id <= 0) {
-            die("ID inválido.");
+            die('ID inválido.');
         }
 
         $usuario = $this->userModel->getById($id);
 
         if (!$usuario) {
-            die("Usuario no encontrado.");
+            die('Usuario no encontrado.');
         }
 
-        require __DIR__ . "/../views/users/edit.php";
+        require __DIR__ . '/../views/users/edit.php';
     }
 
-    public function update() {
+    // Actualizar usuario
+    public function update(): void
+    {
+        $id = (int)($_POST['user_id'] ?? 0);
 
-        $id = (int)($_POST["user_id"] ?? 0);
-        $firstname = trim($_POST["firstname"] ?? "");
-        $lastname = trim($_POST["lastname"] ?? "");
-        $address = trim($_POST["address"] ?? "");
-        $contact = trim($_POST["contact"] ?? "");
-        $email = trim($_POST["email"] ?? "");
-        $password = trim($_POST["password"] ?? "");
-        $rol = trim($_POST["rol"] ?? "");
+        $firstname = trim($_POST['firstname'] ?? '');
+        $lastname = trim($_POST['lastname'] ?? '');
+        $address = trim($_POST['address'] ?? '');
+        $contact = trim($_POST['contact'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
+        $rol = trim($_POST['rol'] ?? 'usuario');
 
-        if ($id <= 0 || $firstname === "" || $lastname === "" || $email === "") {
-            die("Datos inválidos.");
+        if (
+            $id <= 0 ||
+            $firstname === '' ||
+            $lastname === '' ||
+            $email === ''
+        ) {
+            die('Datos inválidos.');
         }
 
-        if ($password !== "") {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            die('El correo electrónico no es válido.');
+        }
 
-            $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        if (!in_array($rol, ['usuario', 'admin'], true)) {
+            $rol = 'usuario';
+        }
+
+        // Si escribió una nueva contraseña
+        if ($password !== '') {
+
+            $password_hash = password_hash(
+                $password,
+                PASSWORD_DEFAULT
+            );
 
             $this->userModel->update(
                 $id,
@@ -100,6 +149,7 @@ class UserController {
 
         } else {
 
+            // Mantener la contraseña existente
             $this->userModel->updateWithoutPassword(
                 $id,
                 $firstname,
@@ -111,19 +161,22 @@ class UserController {
             );
         }
 
-        header("Location: index.php?action=index");
+        header('Location: index.php?action=index');
         exit;
     }
 
-    public function delete() {
+    // Eliminar usuario
+    public function delete(): void
+    {
+        $id = (int)($_GET['id'] ?? 0);
 
-        $id = (int)($_GET["id"] ?? 0);
-
-        if ($id > 0) {
-            $this->userModel->delete($id);
+        if ($id <= 0) {
+            die('ID inválido.');
         }
 
-        header("Location: index.php?action=index");
+        $this->userModel->delete($id);
+
+        header('Location: index.php?action=index');
         exit;
     }
 }
