@@ -8,9 +8,12 @@
 
         <div>
             <p class="user-name">
-                Hola,
+                Hola, 
                 <strong>
                     <?= htmlspecialchars($_SESSION['usuario_nombre']) ?>
+                </strong>
+                <strong>
+                    <?= htmlspecialchars($_SESSION['usuario_apellido']) ?>
                 </strong>
             </p>
 

@@ -37,6 +37,7 @@ class AuthController
         $_SESSION['usuario_id'] = $usuario['user_id'];
         $_SESSION['usuario_nombre'] = $usuario['firstname'];
         $_SESSION['usuario_rol'] = $usuario['rol'];
+        $_SESSION['usuario_apellido'] = $usuario['lastname'];
 
         header('Location: index.php?action=index');
         exit;
