@@ -23,6 +23,7 @@ body {
         #667eea,
         #764ba2
     );
+    font-weight: bold;
 }
 .menu-link:hover {
     background-color: #d7ecfb;

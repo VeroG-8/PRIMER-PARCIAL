@@ -337,15 +337,16 @@
 
 .logout-button {
 
-    display: inline-block;
-
-    padding: 9px 15px;
-
-    border-radius: 7px;
-
-    background-color: #f1f1f1;
-
-    color: #444;
+    display: block;
+    margin-top:20px;
+    padding:9px 15px;
+    color: white;
+    background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2
+    );
+    border-radius: 8px;
 
     text-decoration: none;
 
@@ -361,9 +362,8 @@
 .logout-button:hover {
 
     background-color: #e0e0e0;
-
     transform: translateY(-2px);
-
+    box-shadow:0 7px 15px rgba(0, 0, 0, 0.2);
 }
 
 

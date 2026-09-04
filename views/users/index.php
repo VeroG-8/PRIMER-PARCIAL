@@ -35,7 +35,7 @@
 </div>
 
 
-<h1>Listado de usuarios</h1>
+<h1 class="titulo-lista">Listado de usuarios</h1>
 
 <table>
 
