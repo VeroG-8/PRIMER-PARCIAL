@@ -10,6 +10,7 @@
         type="text"
         id="firstname"
         name="firstname"
+        placeholder="Ingresá tu nombre"
         required
     >
 
@@ -19,6 +20,7 @@
         type="text"
         id="lastname"
         name="lastname"
+        placeholder="Ingresá tu apellido"
         required
     >
 
@@ -28,6 +30,7 @@
         type="text"
         id="address"
         name="address"
+        placeholder="Ingresá tu dirección"
     >
 
     <label class="label" for="contact">Contacto</label>
@@ -36,6 +39,7 @@
         type="text"
         id="contact"
         name="contact"
+        placeholder="Ingresá tu contacto"
     >
 
     <label class="label" for="email">Correo</label>
@@ -44,6 +48,7 @@
         type="email"
         id="email"
         name="email"
+        placeholder="Ingresá tu correo"
         required
     >
 
@@ -53,6 +58,7 @@
         type="password"
         id="password"
         name="password"
+        placeholder="Ingresá tu contraseña"
         required
     >
 
