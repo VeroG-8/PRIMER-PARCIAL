@@ -2,7 +2,7 @@
 
 <h1>Nuevo usuario</h1>
 
-<form class="form" action="index.php?action=store" method="POST">
+<form class="form" id="form" action="index.php?action=store" method="POST">
 
     <label class="label" for="firstname">Nombre</label>
     <input
@@ -61,6 +61,19 @@
         placeholder="Ingresá tu contraseña"
         required
     >
+    <div class="form-group">
+        <label for="password_confirm">Confirmar contraseña</label>
+
+        <input
+            class="input"
+            type="password"
+            id="password_confirm"
+            name="password_confirm"
+            placeholder="Repetí la contraseña"
+            required
+        >
+        <small id="password-error"></small>
+    </div>
 
     <label class="label" for="rol">Rol</label>
 
