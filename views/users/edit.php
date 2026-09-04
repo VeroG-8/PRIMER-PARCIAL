@@ -71,6 +71,7 @@
         type="password"
         id="password"
         name="password"
+        placeholder="Dejar vacío para conservar la contraseña actual"
     >
 
     <label class="label" for="rol">Rol</label>
